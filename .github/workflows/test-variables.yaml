@@ -1,0 +1,35 @@
+name: Test inputs
+run-name: Test variables for ${{ inputs.github.ref || inputs.github.ref_name  }} by @${{ github.actor }} 
+on:
+  
+  push:
+     branches: [ "**" ]
+    
+
+## specific permissions for id-token (oidc->az access token exchange), contents (code), and security-events (write advanced security data)
+permissions: { }
+
+jobs:
+
+  useRepoLevel:
+    uses: atlesp/workflow-testing/.github/workflows/reusable-workflow.yaml.yaml@main
+    with:
+      valueAsInput: ${{ vars.BOTH_REPO_AND_ENV_VARIABLE }}      
+    secrets:
+      valueAsSecret: ${{ secrets.BOTH_REPO_AND_ENV_SECRET }} 
+
+  useEnvironmentInstanceOfVariable:
+    uses: atlesp/workflow-testing/.github/workflows/reusable-workflow.yaml.yaml@main
+    with:
+      environment: dev
+      valueAsInput: ${{ vars.BOTH_REPO_AND_ENV_VARIABLE }}      
+    secrets:
+      valueAsSecret: ${{ secrets.BOTH_REPO_AND_ENV_SECRET }} 
+
+  onlyInEnvironmentVariables:
+    uses: atlesp/workflow-testing/.github/workflows/reusable-workflow.yaml.yaml@main
+    with:
+      environment: dev
+      valueAsInput: ${{ vars.ONLY_IN_ENV_VARIABLE }}      
+    secrets:
+      valueAsSecret: ${{ secrets.ONLY_IN_ENV_SECRET }} 
