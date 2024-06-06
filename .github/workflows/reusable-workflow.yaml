@@ -1,0 +1,32 @@
+name: Test hierchical variables and secrets
+
+on:
+  workflow_call:
+    inputs:
+      environment: 
+        description: "The Github environment to use to get variables and secrets"
+        type: string
+        required: false
+
+      valueAsinput:
+        type: string
+        required: true
+        description: ""
+
+    secrets:
+      valueAsSecret:
+        required: true
+        description: ""
+
+jobs:
+  build:
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Environmnet: ${{ inputs.environment }} "  
+          echo "valueAsinput: ${{ inputs.valueAsinput }} "
+          echo "valueAsSecret: ${{ secrets.valueAsSecret }} "
+          
